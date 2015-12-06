@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <button onclick="setLocalStorage()">Set on Local Storage</button>
+        <button onclick="updateLocalStorage()">Update Local Storage</button>
+        <button onclick="removeLocalStorage()">Remove Item from Local Storage</button>
+    </div>
+    <div style="margin-top:10px">
+        <button onclick="setSessionStorage()">Set on Session Storage</button>
+        <button onclick="updateSessionStorage()">Update Session Storage</button>
+        <button onclick="removeSessionStorage()">Remove Item from Session Storage</button>
+    </div>
+    
+    <div id="resultLocal"></div>
+    <div id="resultSession"></div>
+
+    <script>
+
+        function updateLocalStorage() {
+
+            var result = document.getElementById("resultLocal");
+
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("lastname", "Smith Updated"); // or localStorage.lastname = "Smith";
+                result.innerHTML = localStorage.getItem("lastname"); // or localStorage.lastname;
+            }
+            else {
+                alert("No Web Storage Support");
+            }
+        }
+        function setLocalStorage() {
+
+            var result = document.getElementById("resultLocal");
+
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("lastname", "Smith"); // or localStorage.lastname = "Smith";
+                result.innerHTML = localStorage.getItem("lastname"); // or localStorage.lastname;
+            }
+            else {
+                alert("No Web Storage Support");
+            }
+        }
+        function removeLocalStorage() {
+            if (typeof (Storage) !== "undefined") {
+                localStorage.removeItem("lastname");
+            }
+        }
+        /////
+        function updateSessionStorage() {
+
+            var result = document.getElementById("resultSession");
+
+            if (typeof (Storage) !== "undefined") {
+                sessionStorage.setItem("lastname", "Smith Updated"); // or localStorage.lastname = "Smith";
+                result.innerHTML = sessionStorage.getItem("lastname"); // or localStorage.lastname;
+            }
+            else {
+                alert("No Web Storage Support");
+            }
+        }
+        function setSessionStorage() {
+
+            var result = document.getElementById("resultSession");
+
+            if (typeof (Storage) !== "undefined") {
+                sessionStorage.setItem("lastname", "Smith"); // or localStorage.lastname = "Smith";
+                result.innerHTML = sessionStorage.getItem("lastname"); // or localStorage.lastname;
+            }
+            else {
+                alert("No Web Storage Support");
+            }
+        }
+        function removeSessionStorage() {
+            if (typeof (Storage) !== "undefined") {
+                sessionStorage.removeItem("lastname");
+            }
+        }
+
+
+    </script>
+</body>
+</html>

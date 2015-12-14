@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSockets</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        Data: <input type="text"  id="txtSend" style="width:200px" />
+        <input type="button" value="Send Data To Server" onclick="sendData()" />
+    </div>
+    <br />
+    <h4>Response from Server</h4>
+    
+    <textarea id="txtResponse" style="width:500px;height:300px"></textarea>
+    <input type="button" value="Close Connection" onclick="closeConnection()" />
+
+    <script>
+        (function () {
+
+            inputSendData = document.getElementById("txtSend");
+            textarea = document.getElementById("txtResponse");
+
+            connection = new WebSocket('ws://localhost:4844/WebSockets/WebSocketHandler.ashx');
+            connection.onopen = function () {
+                connection.send("PING");
+                textarea.innerHTML += "Connected \n";
+            };
+
+            connection.onerror = function (error) {
+                textarea.innerHTML += error.message + "\n";
+            }
+
+            connection.onmessage = function (e) {
+                textarea.innerHTML += "SERVER:     " + e.data + "\n";
+            }
+
+            connection.onclose = function () {
+                textarea.innerHTML += "Connection closed \n";
+            }
+
+        })();
+
+        function sendData() {
+            if (connection.readyState == connection.OPEN) {
+                connection.send(inputSendData.value);
+            }
+            else {
+                textarea.innerHTML += "Connection is not opened";
+            } 
+            
+        }
+
+        function closeConnection() {
+            if (connection.readyState != connection.CLOSED) {
+                connection.close();
+            }
+        }
+
+        
+        
+    </script>
+</body>
+</html>

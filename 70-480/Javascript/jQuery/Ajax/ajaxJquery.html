@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    
+	<meta charset="utf-8" />
+    <style>
+        th,td{
+            padding:10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+        <button onclick="carregar()">Carregar $.ajax</button>
+        <button onclick="carregarUsandoGet()">Carregar $.get</button>
+        <button onclick="carregarUsandoPost()">Carregar $.post</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+        function carregar() {
+            $.ajax("customers.js", {
+                method: "GET",
+                dataType: "json",
+                cache: true
+            }).done(function (data, textStatus, jqXHR) {
+
+                escreverHtml(data);
+
+                console.log(data);
+                console.log(textStatus);
+                console.log(jqXHR);
+
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log(jqXHR);
+            });
+        }
+
+        function carregarUsandoGet() {
+
+            //https://api.jquery.com/jquery.get/
+            $.get("customers.js", null, function (data, textStatus, jqXHR) {
+                logNoConsole(data, textStatus, jqXHR);
+                escreverHtml(data);
+            },"json");
+        }
+
+        function carregarUsandoPost() {
+            //https://api.jquery.com/jquery.post/
+
+            $.post("customers.js",
+                 function (data, textStatus, jqXHR) {
+                    logNoConsole(data, textStatus, jqXHR);
+                    escreverHtml(data);
+                 }, "json").fail(function (jqXHR, textStatus, errorThrown) {
+                     logNoConsole(null, textStatus, jqXHR, errorThrown);
+                 });
+        }
+
+        function escreverHtml(data) {
+
+            var html = "";
+            for (var i = 0; i < data.length; i++) {
+                html += "<tr>";
+                for (var customerProperty in data[i]) {
+                    html += "<td>" + data[i][customerProperty] + "</td>";
+                }
+                html += "</tr>";
+
+            }
+            $("table tbody").html(html);
+        }
+
+        function logNoConsole(data, textStatus, jqXHR, errorThrown) {
+            console.log(textStatus);
+            console.log(data);
+            console.log(jqXHR);
+            console.log(errorThrown);
+        }
+
+    </script>
+
+</body>
+</html>

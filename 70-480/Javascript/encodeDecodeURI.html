@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <input type="text" id="decodedUri" value="http://my test.asp?name=ståle&car=saab ,/?:@&=+$#" style="width:600px" />
+        <button onclick="encode()"> Encode URI</button>
+    </div>
+    <br />
+    <div>
+        <input type="text" id="encodedUri" style="width:600px" />
+        <button onclick="decode()"> Decode URI</button>
+    </div>
+    <br />
+
+    <div>
+        <input type="text" id="decodedUriComponent" value="http://my test.asp?name=ståle&car=saab ,/?:@&=+$#" style="width:600px" />
+        <button onclick="encodeComponent()"> Encode URI Component</button>
+    </div>
+    <br />
+    <div>
+        <input type="text" id="encodedUriComponent" style="width:600px" />
+        <button onclick="decodeComponent()"> Decode URI Component</button>
+    </div>
+
+    <br />
+    <div style="color:red" id="result"></div>
+    <script>
+        function encode() {
+            var uri = document.getElementById("decodedUri").value,
+            result = document.getElementById("result"),
+            encodedUriElement = document.getElementById("encodedUri");
+
+            var encodedUri = encodeURI(uri);
+
+            result.innerHTML = encodedUri;
+            encodedUriElement.value = encodedUri;
+        }
+
+        function decode() {
+            var encodedUri = document.getElementById("encodedUri").value,
+            result = document.getElementById("result"),
+            decodedUriElement = document.getElementById("decodedUri");
+
+            var decodedUri = decodeURI(encodedUri);
+
+            result.innerHTML = decodedUri;
+        }
+
+        function encodeComponent() {
+            var uri = document.getElementById("decodedUriComponent").value,
+            result = document.getElementById("result"),
+            encodedUriElement = document.getElementById("encodedUriComponent");
+
+            var encodedUri = encodeURIComponent(uri);
+
+            result.innerHTML = encodedUri;
+            encodedUriElement.value = encodedUri;
+        }
+
+        function decodeComponent() {
+            var encodedUri = document.getElementById("encodedUriComponent").value,
+            result = document.getElementById("result"),
+            decodedUriElement = document.getElementById("decodedUriComponent");
+
+            var decodedUri = decodeURIComponent(encodedUri);
+
+            result.innerHTML = decodedUri;
+        }
+
+    </script>
+</body>
+</html>

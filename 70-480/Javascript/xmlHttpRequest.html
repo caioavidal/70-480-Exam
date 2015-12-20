@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+    <input type="button" value="Get Json Data" onclick="getJsonData()"/>
+    <input type="button" value="Get XML Data" onclick="getXmlData()" />
+    <input type="button" value="Post JSON Data" onclick="postJsonData()" />
+    <input type="button" value="Post XML Data" onclick="postXmlData()" />
+
+    <br />
+    <input type="button" value="Get Binary Data" onclick="getBinaryData()" />
+    <br />
+    <br />
+    <output id="results"></output>
+    <img alt="js" id="blobResult" />
+    <script>
+
+        function getJsonData(){
+            var xReq = new XMLHttpRequest();
+            xReq.open("GET", "jQuery/Ajax/customers.json", false);
+            xReq.send(null);
+
+            var json = JSON.parse(xReq.response);
+            console.log(json);
+
+            var results = document.getElementById("results");
+            results.innerText = xReq.response;
+        }
+
+        function getXmlData() {
+            var xReq = new XMLHttpRequest();
+            xReq.open("GET", "jQuery/Ajax/customers.xml", true);
+            xReq.timeout = 2000;
+            xReq.send(null);
+            
+
+            xReq.onreadystatechange = function (e) {
+                var results = document.getElementById("results");
+                if (xReq.readyState == 4) {
+                    if (xReq.status === 200) {
+                        
+                        results.innerText = xReq.response;
+                    }
+                    else {
+                        results.innerText = xReq.statusText;
+                    }
+                }
+                
+            }
+
+            xReq.ontimeout = function () {
+                var results = document.getElementById("results");
+                results.innerText = "Timeout";
+            }
+        }
+
+        function postJsonData() {
+            var xReq = new XMLHttpRequest();
+            xReq.open("POST", "/ReceiveData.ashx", true);
+
+            xReq.timeout = 15000;
+
+            var person = {
+                FirstName: "Rick",
+                HairColor: "Brown"
+            };
+            var personJson = JSON.stringify(person);
+            xReq.send(personJson);
+
+
+            xReq.onreadystatechange = function (e) {
+                var results = document.getElementById("results");
+                if (xReq.readyState == 4) {
+                    if (xReq.status === 200) {
+
+                        results.innerText = xReq.response;
+                    }
+                    else {
+                        results.innerText = xReq.statusText;
+                    }
+                }
+
+            }
+
+            xReq.ontimeout = function () {
+                var results = document.getElementById("results");
+                results.innerText = "Timeout";
+            }
+        }
+
+        function postXmlData() {
+            var xReq = new XMLHttpRequest();
+            xReq.open("POST", "/ReceiveData.ashx", true);
+
+            xReq.timeout = 15000;
+
+            var xmlData = "<Person firstname='Rick' lastName='Delorme' hairColor='Brown' eyeColor='Brown' /> ";
+            xReq.send(xmlData);
+
+
+            xReq.onreadystatechange = function (e) {
+                var results = document.getElementById("results");
+                if (xReq.readyState == 4) {
+                    if (xReq.status === 200) {
+
+                        results.innerText = xReq.response;
+                    }
+                    else {
+                        results.innerText = xReq.statusText;
+                    }
+                }
+
+            }
+
+            xReq.ontimeout = function () {
+                var results = document.getElementById("results");
+                results.innerText = "Timeout";
+            }
+        }
+
+        function getBinaryData() {
+            var xReq = new XMLHttpRequest();
+            xReq.open("GET", "/Images/why-js.png", true);
+            xReq.responseType = "blob";
+            xReq.timeout = 2000;
+            xReq.send(null);
+
+
+            xReq.onreadystatechange = function (e) {
+                var results = document.getElementById("results");
+                var blobResult = document.getElementById("blobResult");
+
+                if (xReq.readyState == 4) {
+                    if (xReq.status === 200) {
+                        var blob = xReq.response;
+                        
+                        //results.innerText = xReq.response;
+                        blobResult.src = URL.createObjectURL(blob);
+                    }
+                    else {
+                        results.innerText = xReq.statusText;
+                    }
+                }
+
+            }
+
+            xReq.ontimeout = function () {
+                var results = document.getElementById("results");
+                results.innerText = "Timeout";
+            }
+        }
+    </script>
+</body>
+</html>

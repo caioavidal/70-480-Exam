@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <p>Starts on: <input type="number" id="initialNumber" /></p>
+    <p>Count numbers: <output id="result"></output></p>
+    <button onclick="startWorker()">Start Worker</button>
+    <button onclick="stopWorker()">Stop Worker</button>
+
+
+    <script>
+        var w;
+
+
+        function startWorker() {
+            if (typeof (Worker) !== "undefined") {
+                if (typeof (w) === "undefined") {
+                    w = new Worker("counter.js");
+
+                    var initialNumber = document.getElementById("initialNumber").value;
+
+                    setInterval(function () {
+                        w.postMessage(initialNumber);
+                    }, 500);
+
+                    w.onmessage = function (event) {
+                        document.getElementById("result").innerHTML = event.data;
+                    };
+
+                    w.onerror = function (event) {
+                        console.log(event);
+                        stopWorker();
+                    }
+                }
+            } else {
+                //sorry, no web worker support
+            }
+        }
+        function stopWorker() {
+            w.terminate();
+            w = undefined;
+        }
+
+    </script>
+</body>
+</html>

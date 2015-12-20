@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <input type="text" id="cep" />
+    <button onclick="validarCep()">Validar CEP</button>
+    <button onclick="getMatches()">Matches</button>
+    <script>
+
+        function validarCep(){
+            var cep = document.getElementById("cep").value;
+            var regexExpression = /^\d{5}-\d{3}$/;
+            if (regexExpression.test(cep)) {
+                alert("validado");
+            } else {
+                alert("inválido");
+            }
+        }
+
+        function getMatches() {
+            var cep = document.getElementById("cep").value;
+            var regexExpression = /^\d{5}-\d{3}$/;
+            var matches = regexExpression.exec(cep);
+            alert(matches);
+             
+        }
+    </script>
+</body>
+</html>

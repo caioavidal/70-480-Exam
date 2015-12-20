@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <form id="form1" method="get">
+        <p>Name : <input type="text" name="Name"> </p>
+        <p>
+            Age: <input type="number" name="Age">
+        </p>
+        
+    </form>
+
+    Address: <input type="text" name="Address" form="form1">
+
+    <input type="submit" value="Send" form="form1">
+
+    <hr />
+
+    <form id="form2">
+        <p>Country: <input type="text" name="Country"> </p>
+        <p>State: <input type="text" name="State" form="form1"> </p>
+        <input type="submit" />
+    </form>
+</body>
+</html>
